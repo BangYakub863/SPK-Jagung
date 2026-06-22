@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Sistem Pendukung Keputusan Pemilihan Jenis Jagung Terbaik Menggunakan Metode SAW</title>
+  <meta name="description" content="Dashboard SPK pemilihan jenis jagung terbaik menggunakan metode SAW." />
+  <meta name="theme-color" content="#07111f" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="bg-animation" aria-hidden="true">
+    <span></span><span></span><span></span><span></span><span></span>
+    <span></span><span></span><span></span><span></span><span></span>
+  </div>
+
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <button class="menu-toggle" id="menuToggle" aria-label="Buka menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+
+        <div class="brand-logo">
+          <img
+            id="profileLogo"
+            alt="Logo Profil"
+            src="profil.png"
+          />
+        </div>
+
+        <div class="brand-text">
+          <h1>CornApp</h1>
+          <p>Sistem Aplikasi Berbasis Website</p>
+        </div>
+      </div>
+
+      <nav class="navbar" id="navbar">
+        <a href="#beranda" class="nav-link active" data-page="beranda">Beranda</a>
+        <a href="#data-jenis" class="nav-link" data-page="data-jenis">Data Jenis Jagung</a>
+        <a href="#kriteria" class="nav-link" data-page="kriteria">Kriteria Penilaian</a>
+        <a href="#aturan" class="nav-link" data-page="aturan">Aturan Penilaian</a>
+        <a href="#alternatif" class="nav-link" data-page="alternatif">Data Alternatif</a>
+        <a href="#proses" class="nav-link" data-page="proses">Proses SAW</a>
+        <a href="#hasil" class="nav-link" data-page="hasil">Hasil & Peringkat</a>
+        <a href="#grafik" class="nav-link" data-page="grafik">Grafik</a>
+      </nav>
+    </header>
+
+    <main class="main-content">
+      <section class="page active" id="beranda">
+        <div class="hero">
+          <div class="hero-copy">
+            <div class="badge">Dashboard SPK Modern</div>
+            <h2>Sistem Pendukung Keputusan Pemilihan Jenis Jagung Terbaik Menggunakan Metode SAW</h2>
+            <p>
+              Aplikasi ini membantu menentukan jenis jagung terbaik berdasarkan empat kriteria penilaian
+              menggunakan metode Simple Additive Weighting secara transparan, cepat, dan akurat.
+            </p>
+
+            <div class="hero-actions">
+              <button class="btn btn-primary" data-go="alternatif">Mulai Analisis</button>
+              <button class="btn btn-secondary" data-go="hasil">Lihat Peringkat</button>
+            </div>
+          </div>
+
+          <div class="hero-panel">
+            <div class="hero-card">
+              <h3>Tujuan Sistem</h3>
+              <ul>
+                <li>Membantu pemilihan jenis jagung terbaik.</li>
+                <li>Menyajikan proses SAW secara jelas.</li>
+                <li>Menampilkan hasil peringkat yang mudah dipahami.</li>
+                <li>Mendukung input, simpan, hapus, dan pemulihan data.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <span class="stat-label">Jumlah Alternatif</span>
+            <strong id="statAlternatif">15</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Jumlah Kriteria</span>
+            <strong id="statKriteria">4</strong>
+          </article>
+          <article class="stat-card">
+            <span class="stat-label">Total Bobot</span>
+            <strong id="statBobot">100%</strong>
+          </article>
+          <article class="stat-card highlight">
+            <span class="stat-label">Alternatif Terbaik</span>
+            <strong id="statTerbaik">-</strong>
+          </article>
+        </div>
+
+        <div class="content-card">
+          <div class="card-header">
+            <h3>Ringkasan Sistem</h3>
+            <p>Informasi utama yang digunakan untuk proses keputusan.</p>
+          </div>
+
+          <div class="summary-grid">
+            <div class="summary-item">
+              <h4>Metode</h4>
+              <p>Simple Additive Weighting (SAW)</p>
+            </div>
+            <div class="summary-item">
+              <h4>Objek</h4>
+              <p>Jenis jagung unggulan</p>
+            </div>
+            <div class="summary-item">
+              <h4>Output</h4>
+              <p>Nilai preferensi dan ranking</p>
+            </div>
+            <div class="summary-item">
+              <h4>Fitur</h4>
+              <p>CRUD, simpan data, ekspor, grafik</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="data-jenis">
+        <div class="page-head">
+          <h2>Data Jenis Jagung</h2>
+          <p>Daftar 15 alternatif jenis jagung yang digunakan dalam perhitungan.</p>
+        </div>
+
+        <div class="content-card">
+          <div class="table-toolbar">
+            <div class="toolbar-left">
+              <input type="text" id="searchJenis" placeholder="Cari jenis jagung..." class="search-input" />
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="data-table center-table" id="jenisTable">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama Alternatif</th>
+                  <th>Keterangan</th>
+                </tr>
+              </thead>
+              <tbody id="jenisTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="kriteria">
+        <div class="page-head">
+          <h2>Kriteria Penilaian</h2>
+          <p>Empat kriteria utama beserta jenis dan bobot penilaiannya.</p>
+        </div>
+
+        <div class="criteria-grid" id="criteriaCards"></div>
+
+        <div class="content-card">
+          <div class="card-header">
+            <h3>Komposisi Bobot</h3>
+            <p>Total bobot harus sama dengan 100%.</p>
+          </div>
+
+          <div class="weight-bar">
+            <div class="weight-fill" id="weightFill"></div>
+          </div>
+
+          <div class="weight-labels">
+            <span>C1: 25%</span>
+            <span>C2: 30%</span>
+            <span>C3: 25%</span>
+            <span>C4: 20%</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="aturan">
+        <div class="page-head">
+          <h2>Aturan Penilaian</h2>
+          <p>Konversi nilai 1 sampai 5 untuk setiap kriteria.</p>
+        </div>
+
+        <div class="rules-grid" id="rulesGrid"></div>
+      </section>
+
+      <section class="page" id="alternatif">
+        <div class="page-head">
+          <h2>Data Alternatif</h2>
+          <p>Menampilkan dan mengelola 15 alternatif beserta nilai kriteria.</p>
+        </div>
+
+        <div class="content-card">
+          <form class="form-grid" id="alternativeForm">
+            <input type="hidden" id="editId" />
+
+            <div class="form-group form-span">
+              <label for="namaAlternatif">Nama Alternatif</label>
+              <input type="text" id="namaAlternatif" placeholder="Contoh: Jagung Manis Premium" required />
+            </div>
+
+            <div class="form-group">
+              <label for="c1">C1 - Ukuran Buah</label>
+              <select id="c1" required></select>
+            </div>
+
+            <div class="form-group">
+              <label for="c2">C2 - Tingkat Kemanisan</label>
+              <select id="c2" required></select>
+            </div>
+
+            <div class="form-group">
+              <label for="c3">C3 - Ketahanan Penyimpanan</label>
+              <select id="c3" required></select>
+            </div>
+
+            <div class="form-group">
+              <label for="c4">C4 - Harga Bibit</label>
+              <select id="c4" required></select>
+            </div>
+
+            <div class="form-actions form-span">
+              <button type="submit" class="btn btn-primary" id="saveButton">Tambah Data</button>
+              <button type="button" class="btn btn-secondary" id="saveDataBtn">Simpan Data</button>
+              <button type="button" class="btn btn-secondary" id="resetForm">Reset</button>
+              <button type="button" class="btn btn-danger" id="deleteSelected">Hapus Terpilih</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="content-card trash-card">
+          <div class="card-header">
+            <h3>Data Terhapus & Pemulihan</h3>
+            <p>Data yang dihapus bisa dipulihkan kembali dari daftar ini.</p>
+          </div>
+          <div class="trash-list" id="trashList"></div>
+        </div>
+
+        <div class="content-card">
+          <div class="table-toolbar">
+            <div class="toolbar-left">
+              <input type="text" id="searchAlternatif" placeholder="Cari alternatif..." class="search-input" />
+            </div>
+            <div class="toolbar-right">
+              <button class="btn btn-secondary" id="sortAlternatif" type="button">Sort Nama</button>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="data-table center-table" id="alternatifTable">
+              <thead>
+                <tr>
+                  <th><input type="checkbox" id="selectAll" /></th>
+                  <th data-sort="index">No</th>
+                  <th data-sort="name">Nama Alternatif</th>
+                  <th data-sort="c1">C1</th>
+                  <th data-sort="c2">C2</th>
+                  <th data-sort="c3">C3</th>
+                  <th data-sort="c4">C4</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+              <tbody id="alternatifTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="proses">
+        <div class="page-head">
+          <h2>Proses Perhitungan SAW</h2>
+          <p>Menampilkan matriks keputusan awal, normalisasi, bobot, dan nilai preferensi.</p>
+        </div>
+
+        <div class="step-list" id="stepList"></div>
+
+        <div class="content-card">
+          <div class="card-header">
+            <h3>Matriks Keputusan Awal</h3>
+            <p>Data asli sebelum normalisasi.</p>
+          </div>
+          <div class="table-wrap" id="matrixAwalWrap"></div>
+        </div>
+
+        <div class="content-card">
+          <div class="card-header">
+            <h3>Matriks Normalisasi</h3>
+            <p>Hasil transformasi data sesuai jenis kriteria benefit dan cost.</p>
+          </div>
+          <div class="table-wrap" id="matrixNormalisasiWrap"></div>
+        </div>
+
+        <div class="content-card">
+          <div class="card-header">
+            <h3>Perhitungan Bobot & Preferensi</h3>
+            <p>Nilai preferensi diperoleh dari hasil perkalian normalisasi dengan bobot.</p>
+          </div>
+          <div class="table-wrap" id="preferensiWrap"></div>
+        </div>
+      </section>
+
+      <section class="page" id="hasil">
+        <div class="page-head">
+          <h2>Hasil Akhir dan Peringkat</h2>
+          <p>Ranking dari tertinggi ke terendah beserta alternatif terbaik.</p>
+        </div>
+
+        <div class="result-highlight" id="bestCard">
+          <div>
+            <span>Alternatif Terbaik</span>
+            <h3 id="bestName">-</h3>
+            <p id="bestScore">Nilai preferensi: -</p>
+          </div>
+          <div class="best-medal" id="bestMedal">🏅</div>
+        </div>
+
+        <div class="content-card">
+          <div class="table-toolbar">
+            <div class="toolbar-left">
+              <input type="text" id="searchHasil" placeholder="Cari hasil..." class="search-input" />
+            </div>
+            <div class="toolbar-right">
+              <button class="btn btn-secondary" id="printResult" type="button">Cetak Hasil</button>
+              <button class="btn btn-secondary" id="downloadPdf" type="button">Download PDF</button>
+              <button class="btn btn-secondary" id="downloadJson" type="button">Download JSON</button>
+            </div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="data-table center-table" id="hasilTable">
+              <thead>
+                <tr>
+                  <th data-result-sort="rank">Peringkat</th>
+                  <th data-result-sort="name">Alternatif</th>
+                  <th data-result-sort="score">Nilai Preferensi</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="hasilTableBody"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <section class="page" id="grafik">
+        <div class="page-head">
+          <h2>Grafik Nilai Akhir</h2>
+          <p>Grafik batang untuk membandingkan nilai preferensi seluruh alternatif.</p>
+        </div>
+
+        <div class="content-card chart-card">
+          <div class="chart-toolbar">
+            <button class="btn btn-secondary" id="refreshChart" type="button">Perbarui Grafik</button>
+          </div>
+          <canvas id="resultChart" width="1200" height="520" aria-label="Grafik nilai akhir" role="img"></canvas>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
